@@ -1,6 +1,6 @@
-class CreateDocuments < ActiveRecord::Migration[6.1]
+class CreateNotes < ActiveRecord::Migration[6.1]
   def change
-    create_table :documents do |t|
+    create_table :notes do |t|
       t.string :title
       t.string :body
       t.timestamps
