@@ -12,19 +12,19 @@
 
 ActiveRecord::Schema.define(version: 2022_01_24_210820) do
 
-  create_table "documents", force: :cascade do |t|
+  create_table "folders", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "notes", force: :cascade do |t|
     t.string "title"
     t.string "body"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "folder_id"
-    t.index ["folder_id"], name: "index_documents_on_folder_id"
-  end
-
-  create_table "folders", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.index ["folder_id"], name: "index_notes_on_folder_id"
   end
 
 end

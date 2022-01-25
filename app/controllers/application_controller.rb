@@ -5,7 +5,7 @@ class ApplicationController < Sinatra::Base
   get '/' do
     "Welcome! You can view data through these endpoints:
     /folders
-    /documents"
+    /notes"
   end
 
 
@@ -38,33 +38,37 @@ class ApplicationController < Sinatra::Base
 
 
   # DOCUMENTS #
-  get '/documents' do # return all
-    documents = Document.all
-    documents.to_json
+  get '/notes' do # return all
+    notes = Note.all.recently_changed
+    notes.to_json
   end
 
-  get '/documents/:id' do # return by ID
-    document = Document.find(params[:id])
-    document.to_json
+  get '/notes/:id' do # return by ID
+    note = Note.find(params[:id])
+    note.to_json
   end
 
-  post '/documents' do # create new
-    document = Document.create(
+  post '/notes' do # create new
+    note = Note.create(
       title: params[:title],
+      body: params[:body],
       folder_id: params[:folder_id]
       )
-    document.to_json
+    note.to_json
   end
 
-  patch '/documents/:id' do # update doc body
-    document = Document.find(params[:id])
-    document.update(body: params[:body])
-    document.to_json
+  patch '/notes/:id' do # update note body
+    note = Note.find(params[:id])
+    note.update(
+      title: params[:title],
+      body: params[:body]
+      )
+    note.to_json
   end
 
-  delete '/documents/:id' do # delete
-    document = Document.find(params[:id])
-    document.destroy
+  delete '/notes/:id' do # delete
+    note = Note.find(params[:id])
+    note.destroy
   end
 
 end

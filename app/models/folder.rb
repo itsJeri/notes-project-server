@@ -1,5 +1,5 @@
 class Folder < ActiveRecord::Base
-    has_many :documents
+    has_many :notes
 
     def self.sort_by_oldest
         self.order(:created_at)
@@ -18,6 +18,6 @@ class Folder < ActiveRecord::Base
     end
 
     def self.recently_changed
-        self.order(:updated_at).last
+        self.order(:updated_at).reverse_order
     end
 end

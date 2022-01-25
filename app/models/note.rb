@@ -1,4 +1,4 @@
-class Document < ActiveRecord::Base
+class Note < ActiveRecord::Base
     belongs_to :folder
 
     def self.sort_by_oldest
@@ -18,6 +18,6 @@ class Document < ActiveRecord::Base
     end
 
     def self.recently_changed
-        self.order(:updated_at).last
+        self.order(:updated_at).reverse_order
     end
 end
