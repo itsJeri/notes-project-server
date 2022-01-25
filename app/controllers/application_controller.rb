@@ -15,6 +15,11 @@ class ApplicationController < Sinatra::Base
     folders.to_json
   end
 
+  get '/folders/notes' do # return folders with their notes
+    folders = Folder.all
+    folders.to_json(include: :notes)
+  end
+
   get '/folders/:id' do # return by ID
     folder = Folder.find(params[:id])
     folder.to_json
