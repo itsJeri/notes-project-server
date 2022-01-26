@@ -11,6 +11,11 @@ class ApplicationController < Sinatra::Base
 
   # FOLDERS #
   get '/folders' do # return all
+    folders = Folder.all
+    folders.to_json
+  end
+
+  get '/folders/recent' do # return all
     folders = Folder.all.recently_changed
     folders.to_json
   end
@@ -39,7 +44,7 @@ class ApplicationController < Sinatra::Base
 
   # DOCUMENTS #
   get '/notes' do # return all
-    notes = Note.all.recently_changed
+    notes = Note.all
     notes.to_json
   end
 
