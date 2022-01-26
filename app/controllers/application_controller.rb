@@ -66,14 +66,6 @@ class ApplicationController < Sinatra::Base
     note.to_json
   end
 
-  # patch '/notes/:id/folder' do # update note's folder
-  #   note = Note.find(params[:id])
-  #   note.update(
-  #     folder_id: params[:id]
-  #   )
-  #   note.to_json
-  # end
-
   delete '/notes/:id' do # delete
     note = Note.find(params[:id])
     note.destroy
