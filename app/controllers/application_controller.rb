@@ -15,11 +15,6 @@ class ApplicationController < Sinatra::Base
     folders.to_json
   end
 
-  get '/folders/notes' do # return folders with their notes
-    folders = Folder.all
-    folders.to_json(include: :notes)
-  end
-
   get '/folders/:id' do # return by ID
     folder = Folder.find(params[:id])
     folder.to_json
@@ -58,7 +53,7 @@ class ApplicationController < Sinatra::Base
       title: params[:title],
       body: params[:body],
       folder_id: params[:folder_id]
-      )
+    )
     note.to_json
   end
 
@@ -66,14 +61,29 @@ class ApplicationController < Sinatra::Base
     note = Note.find(params[:id])
     note.update(
       title: params[:title],
-      body: params[:body]
-      )
+      body: params[:body],
+    )
     note.to_json
   end
 
   delete '/notes/:id' do # delete
     note = Note.find(params[:id])
     note.destroy
+  end
+
+
+  # FOLDERS/NOTES
+  get '/folders/notes' do # return folders with their notes
+    folders = Folder.all
+    folders.to_json(include: :notes)
+  end
+
+  patch '/folders/notes/:id' do # update note's folder
+    note = Note.find(params[:id])
+    note.update(
+      folder_id: params[:folder_id]
+    )
+    note.to_json
   end
 
 end

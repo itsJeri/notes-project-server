@@ -1,5 +1,5 @@
 puts "🌱 Seeding folders..."
-f1 = Folder.create(name: "Artists")
+f1 = Folder.create(name: "Default")
 f2 = Folder.create(name: "Another folder")
 f3 = Folder.create(name: "Yet another folder")
 
