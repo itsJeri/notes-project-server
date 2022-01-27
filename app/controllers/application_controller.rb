@@ -36,7 +36,7 @@ class ApplicationController < Sinatra::Base
     folder.to_json
   end
 
-  delete '/folders/:id' do # delete
+  delete '/folders/:id' do # delete folder only
     folder = Folder.find(params[:id])
     folder.destroy
   end
@@ -89,6 +89,13 @@ class ApplicationController < Sinatra::Base
       folder_id: params[:folder_id]
     )
     note.to_json
+  end
+
+  delete '/folders/notes/:id' do # delete folder with contained notes
+    notes = Note.where('folder_id = ?', params[:id])
+    folder = Folder.find(params[:id])
+    notes.destroy_all
+    folder.destroy
   end
 
 end
