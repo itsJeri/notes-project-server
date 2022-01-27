@@ -79,8 +79,6 @@ class ApplicationController < Sinatra::Base
     note = Note.find(params[:id])
     note.destroy
   end
-
-
   # FOLDERS/NOTES
   get '/folders/notes' do # return folders with their notes
     folders = Folder.all
