@@ -1,12 +1,14 @@
 class CreateNotes < ActiveRecord::Migration[6.1]
   def change
-    create_table :notes do |t|
+    create_table :notes, id: false, primary_key: :id do |t|
+      t.string :id, primary_key: true
       t.string :title
       t.string :body
       t.timestamps
 
       # Relations
-      t.belongs_to :folder
+      t.string :folder_id
     end
+    add_index :notes, :uuid
   end
 end

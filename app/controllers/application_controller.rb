@@ -26,7 +26,10 @@ class ApplicationController < Sinatra::Base
   end
 
   post '/folders' do # create new
-    folder = Folder.create(name: params[:name])
+    folder = Folder.create(
+      id: params[:id],
+      name: params[:name]
+      )
     folder.to_json
   end
 
@@ -55,6 +58,7 @@ class ApplicationController < Sinatra::Base
 
   post '/notes' do # create new
     note = Note.create(
+      id: params[:id],
       title: params[:title],
       body: params[:body],
       folder_id: params[:folder_id]
