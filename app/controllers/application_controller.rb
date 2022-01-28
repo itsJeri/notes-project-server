@@ -15,15 +15,15 @@ class ApplicationController < Sinatra::Base
     folders.to_json
   end
 
-  get '/folders/recent' do # return all
+  get '/folders/all/recent' do # return all
     folders = Folder.all.recently_changed
     folders.to_json
   end
 
-  get '/folders/:id' do # return by ID
-    folder = Folder.find(params[:id])
-    folder.to_json
-  end
+  # get '/folders/:id' do # return by ID
+  #   folder = Folder.find(params[:id])
+  #   folder.to_json
+  # end
 
   post '/folders' do # create new
     folder = Folder.create(
@@ -45,16 +45,16 @@ class ApplicationController < Sinatra::Base
   end
 
 
-  # DOCUMENTS #
+  # NOTES #
   get '/notes' do # return all
     notes = Note.all
     notes.to_json
   end
 
-  get '/notes/:id' do # return by ID
-    note = Note.find(params[:id])
-    note.to_json
-  end
+  # get '/notes/:id' do # return by ID
+  #   note = Note.find(params[:id])
+  #   note.to_json
+  # end
 
   post '/notes' do # create new
     note = Note.create(
@@ -79,8 +79,75 @@ class ApplicationController < Sinatra::Base
     note = Note.find(params[:id])
     note.destroy
   end
+
+
+  # TAGS
+  get '/tags' do #return all
+    tags = Tag.all
+    tags.to_json
+  end
+
+  post '/tags' do # create new
+    tag = Tag.create(
+      id: params[:id],
+      name: params[:name]
+    )
+    tag.to_json
+  end
+
+  patch '/tags/:id' do # update tag name
+    tag = Tag.find(params[:id])
+    tag.update(
+      name: params[:name]
+    )
+    tag.to_json
+  end
+
+  delete '/tags/:id' do # ***delete tag from entire library***
+    tag = Tag.find(params[:id])
+    tag.destroy
+  end
+
+
+  # NOTE_TAGS JOIN TABLE
+  post '/notes/:note_id/tags/:tag_name' do # create new tag on note
+    note = Note.find(params[:note_id])
+    tag = Tag.create(
+      id: UUID.new.generate, 
+      name: params[:tag_name]
+    )
+    add_tag = note.tags << tag
+    add_tag.to_json
+  end
+
+  patch '/notes/:note_id/tags/:tag_id/add' do # add new tag on note
+    note = Note.find(params[:note_id])
+    tag = Tag.find(params[:tag_id])
+    add_tag = note.tags << tag
+    add_tag.to_json
+  end
+
+  patch '/notes/:note_id/tags/:tag_id/remove' do # remove tag on note
+    note = Note.find(params[:note_id])
+    tag = Tag.find(params[:tag_id])
+    remove_tag = note.tags.delete(tag)
+    remove_tag.to_json
+  end
+
+  # NOTES/TAGS
+  get '/notes/all/tags' do # return all notes with tags
+    notes = Note.all
+    notes.to_json(include: :tags)
+  end
+
+  get '/tags/all/notes' do # return tags with their notes
+    tags = Tag.all
+    tags.to_json(include: :notes)
+  end
+
+
   # FOLDERS/NOTES
-  get '/folders/notes' do # return folders with their notes
+  get '/folders/all/notes' do # return folders with their notes
     folders = Folder.all
     folders.to_json(include: :notes)
   end

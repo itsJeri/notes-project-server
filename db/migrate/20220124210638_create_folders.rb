@@ -6,6 +6,6 @@ class CreateFolders < ActiveRecord::Migration[6.1]
       t.string :name
       t.timestamps
     end
-    add_index :folders, :uuid
+    add_index :folders, :id
   end
 end

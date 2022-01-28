@@ -114,7 +114,7 @@ DEPENDENCIES
   sinatra-activerecord (~> 2.0)
   sqlite3 (~> 1.4)
   thin (~> 1.8)
-  uuid
+  uuid (~> 2.3.9)
 
 BUNDLED WITH
    2.2.30

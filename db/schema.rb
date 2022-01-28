@@ -10,13 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_24_210820) do
+ActiveRecord::Schema.define(version: 2022_01_27_193223) do
 
   create_table "folders", id: :string, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index "\"uuid\"", name: "index_folders_on_uuid"
+    t.index ["id"], name: "index_folders_on_id"
+  end
+
+  create_table "note_tags", id: false, force: :cascade do |t|
+    t.string "note_id"
+    t.string "tag_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["note_id"], name: "index_note_tags_on_note_id"
+    t.index ["tag_id"], name: "index_note_tags_on_tag_id"
   end
 
   create_table "notes", id: :string, force: :cascade do |t|
@@ -25,7 +34,15 @@ ActiveRecord::Schema.define(version: 2022_01_24_210820) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "folder_id"
-    t.index "\"uuid\"", name: "index_notes_on_uuid"
+    t.index ["folder_id"], name: "index_notes_on_folder_id"
+    t.index ["id"], name: "index_notes_on_id"
+  end
+
+  create_table "tags", id: :string, force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["id"], name: "index_tags_on_id"
   end
 
 end

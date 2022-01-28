@@ -9,6 +9,7 @@ class CreateNotes < ActiveRecord::Migration[6.1]
       # Relations
       t.string :folder_id
     end
-    add_index :notes, :uuid
+    add_index :notes, :id
+    add_index :notes, :folder_id
   end
 end
