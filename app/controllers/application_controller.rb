@@ -80,6 +80,7 @@ class ApplicationController < Sinatra::Base
     note.destroy
   end
 
+
   # TAGS
   get '/tags' do #return all
     tags = Tag.all
