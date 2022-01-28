@@ -11,14 +11,14 @@ class ApplicationController < Sinatra::Base
 
   # FOLDERS #
   get '/folders' do # return all
-    folders = Folder.all
+    folders = Folder.all.reverse
     folders.to_json
   end
 
-  get '/folders/all/recent' do # return all
-    folders = Folder.all.recently_changed
-    folders.to_json
-  end
+  # get '/folders/all/recent' do # return all
+  #   folders = Folder.all.recently_changed
+  #   folders.to_json
+  # end
 
   # get '/folders/:id' do # return by ID
   #   folder = Folder.find(params[:id])
@@ -28,14 +28,19 @@ class ApplicationController < Sinatra::Base
   post '/folders' do # create new
     folder = Folder.create(
       id: params[:id],
-      name: params[:name]
+      name: params[:name],
+      created_at: params[:created_at],
+      updated_at: params[:updated_at]
       )
     folder.to_json
   end
 
   patch '/folders/:id' do # rename
     folder = Folder.find(params[:id])
-    folder.update(name: params[:name])
+    folder.update(
+      name: params[:name],
+      updated_at: params[:updated_at]
+      )
     folder.to_json
   end
 
@@ -61,6 +66,8 @@ class ApplicationController < Sinatra::Base
       id: params[:id],
       title: params[:title],
       body: params[:body],
+      created_at: params[:created_at],
+      updated_at: params[:updated_at],
       folder_id: params[:folder_id]
     )
     note.to_json
@@ -71,6 +78,7 @@ class ApplicationController < Sinatra::Base
     note.update(
       title: params[:title],
       body: params[:body],
+      updated_at: params[:updated_at]
     )
     note.to_json
   end
@@ -155,7 +163,8 @@ class ApplicationController < Sinatra::Base
   patch '/folders/notes/:id' do # update note's folder
     note = Note.find(params[:id])
     note.update(
-      folder_id: params[:folder_id]
+      folder_id: params[:folder_id],
+      updated_at: params[:updated_at]
     )
     note.to_json
   end
