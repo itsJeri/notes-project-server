@@ -10,4 +10,14 @@ n2 = Note.create(id: UUID.new.generate, title: "Hoooooly", body: "blah blah", fo
 n3 = Note.create(id: UUID.new.generate, title: "yesssss", body: "nooooo", folder: f2)
 n4 = Note.create(id: UUID.new.generate, title: "possibly", body: "perhaps", folder: f3)
 
+puts "🌱 Seeding tags..."
+t1 = Tag.create(id: UUID.new.generate, name: "math")
+t2 = Tag.create(id: UUID.new.generate, name: "cs")
+t3 = Tag.create(id: UUID.new.generate, name: "art")
+
+puts "Building Note-Tag relations..."
+r1 = NoteTag.create(note: n1, tag: t2)
+r2 = NoteTag.create(note: n3, tag: t1)
+r3 = NoteTag.create(note: n1, tag: t3)
+
 puts "✅ Done seeding!"

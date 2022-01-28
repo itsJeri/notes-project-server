@@ -31,7 +31,8 @@ gem "rake", "~> 13.0"
 # Provides functionality to interact with a SQLite3 database
 gem "sqlite3", "~> 1.4"
 
-gem 'uuid'
+# Generate UUID
+gem "uuid", "~> 2.3.9"
 
 # Randomized seed data
 # https://github.com/faker-ruby/faker
